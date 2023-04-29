@@ -7,22 +7,11 @@ function App() {
   return (
     <div>
       <Header />
-
       <div className={styles.wrapper}>
         <SideBar />
         <main>
-          <Post>
-            denise Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Suscipit, corporis odit harum placeat earum, et iusto quod veniam
-            inventore dicta laudantium labore nisi facere explicabo fuga
-            obcaecati in ad assumenda.
-          </Post>
-          <Post>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit,
-            corporis odit harum placeat earum, et iusto quod veniam inventore
-            dicta laudantium labore nisi facere explicabo fuga obcaecati in ad
-            assumenda.
-          </Post>
+          <Post />
+          <Post />
         </main>
       </div>
     </div>
