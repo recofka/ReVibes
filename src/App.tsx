@@ -1,9 +1,13 @@
 import { Header } from "./components/Header/Header";
 import { SideBar } from "./components/SideBar/SideBar";
-import { Post } from "./components/Post/Post";
+import { Post, PostProps } from "./components/Post/Post";
 import styles from "./App.module.css";
 
-const posts = [
+interface Post extends PostProps {
+  id: number;
+}
+
+const posts: Post[] = [
   {
     id: 1,
     author: {
@@ -11,8 +15,7 @@ const posts = [
       name: "Denise Recofka",
       role: "Front-end Developer",
     },
-
-    content: [
+    contentArr: [
       { type: "paragraph", content: "Hey guys 👋" },
       {
         type: "paragraph",
@@ -30,7 +33,7 @@ const posts = [
       name: "Glenna Reichert",
       role: "Designer",
     },
-    content: [
+    contentArr: [
       { type: "paragraph", content: "Hey guys 👋" },
       {
         type: "paragraph",
@@ -55,12 +58,11 @@ function App() {
               <Post
                 key={post.id}
                 author={post.author}
-                content={post.content}
+                contentArr={post.contentArr}
                 publishedAt={post.publishedAt}
               />
             );
           })}
-          <Post />
         </main>
       </div>
     </div>
