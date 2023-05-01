@@ -21,13 +21,17 @@ export function Comments({ content, onDeleteComment }: CommentsProps) {
 
   return (
     <div className={styles.comment}>
-      <Avatar src="https://github.com/recofka.png" hasBorder={false} />
+      <Avatar
+        src="https://github.com/Pythagora-io.png"
+        hasBorder={false}
+        alt="Profile Image"
+      />
 
       <div className={styles.commentBoxWrapper}>
         <div className={styles.comentContent}>
           <header>
             <div className={styles.authorAndTime}>
-              <strong>Denise Recofka</strong>
+              <strong>Glenna Reichert</strong>
               <time title="April 25th 10:30 am" dateTime="2023-04-24 10:30:21">
                 Posted 2 hours ago
               </time>
