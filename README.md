@@ -1,6 +1,6 @@
 <h1 align="center">Social Revibes</h1>
 
- <p align="center">This small project has an idea to presente a social media feed with some small features like commenting on a post and cheearing to it</p>
+ <p align="center">Simulation of a social network feed</p>
 
 <p align="center">
 
@@ -14,9 +14,9 @@
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/recofka/ReVibes?style=flat-square">
   </a>
   
-  <!-- <a href="https://ReVibes-one.vercel.app">
+  <a href="https://ReVibes-one.vercel.app">
     <img alt="Deployment" src="https://img.shields.io/github/deployments/recofka/ReVibes/production?label=Vercel">
-  </a> -->
+  </a>
 
 </p>
 
@@ -45,10 +45,13 @@ This project was developed with the following technologies:
 ## Project
 
 This is a side project using React which has the purpose to study and to use of Vite and React.
+All comments and cheers are being executed using React's local State.
+
+:construction: This project is still under development :construction_worker:
 
 ## Frontend
 
-<!-- [Click here and check out the result](https://monsters-profile-one.vercel.app/). -->
+[Click here and check out the result](https://re-vibes.vercel.app/).
 
 <h1 align="center">
   <img alt="revibes feed image" title="#app-image"  src="/public/revibes-image.png" />
