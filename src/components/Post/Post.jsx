@@ -1,53 +1,96 @@
+import { useState } from "react";
 import { Avatar } from "../Avatar/Avatar";
 import { Comments } from "../Comments/Comments";
+import { format, formatDistanceToNow } from "date-fns";
 import styles from "./Post.module.css";
 
-export function Post() {
+export function Post({ author, content, publishedAt }) {
+  if (!author) return;
+
+  const [comments, setNewComments] = useState(["Nice!"]);
+  const [newCommentText, setnewCommentText] = useState([""]);
+  const publishedDateFormat = format(publishedAt, "LLLL do 'at' HH:mm");
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    addSuffix: true,
+  });
+
+  function handleNewComment(e) {
+    e.preventDefault();
+    const newComment = e.target.comment.value;
+    setNewComments([...comments, newCommentText]);
+    setnewCommentText("");
+  }
+
+  function handleNewCommentChange(e) {
+    setnewCommentText(e.target.value);
+  }
+
+  function deleteComment(commentToDelete) {
+    const listCommetsWithoutRemoved = comments.filter((comment) => {
+      return comment !== commentToDelete;
+    });
+    setNewComments(listCommetsWithoutRemoved);
+  }
+
+  const isNewCommentEmpty = newCommentText.length === 0;
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://github.com/recofka.png" />
+          <Avatar src={author.avatarUrl} />
 
           <div className={styles.authorInfo}>
-            <strong>Denise Recofka</strong>
-            <span>Web Developer</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
 
-        <time title="April 25th 10:30 am" dateTime="2023-04-24 10:30:21">
-          Posted 2 hours ago
+        <time title={publishedDateFormat} dateTime={publishedAt.toISOString()}>
+          {publishedDateRelativeToNow}
         </time>
       </header>
       <div className={styles.content}>
-        <p>Hey guys 👋 </p>
-
-        <p>
-          I just uploaded another project to my portfolio. It's a project I did
-          at NLW Return, a Rocketseat event. Project name is DoctorCare 🚀
-        </p>
-
-        <p>
-          <a href="">jane.design/doctorcare</a>
-        </p>
-
-        <p>
-          <a href="">#novoprojeto</a> <a href="">#nlw</a>{" "}
-          <a href="">#rocketseat</a>
-        </p>
+        {content.map((line) => {
+          if (line.type === "paragraph") {
+            return <p key={line.content}>{line.content}</p>;
+          } else if (line.type === "link") {
+            return (
+              <p key={line.content}>
+                <a>{line.content}</a>
+              </p>
+            );
+          }
+        })}
       </div>
-      <form className={styles.commentForm}>
+
+      <form onSubmit={handleNewComment} className={styles.commentForm}>
         <strong>Leave a comment</strong>
-        <textarea></textarea>
+        <textarea
+          value={newCommentText}
+          onChange={handleNewCommentChange}
+          name="comment"
+          placeholder="Leave a feedback"
+          required
+        ></textarea>
+
         <footer>
-          <button type="submit">Post Comment</button>
+          <button type="submit" disabled={isNewCommentEmpty}>
+            Post Comment
+          </button>
         </footer>
       </form>
 
       <div className={styles.commentList}>
-        <Comments />
-        <Comments />
-        <Comments />
+        {comments.map((comment) => {
+          return (
+            <Comments
+              key={comment}
+              content={comment}
+              onDeleteComment={deleteComment}
+            />
+          );
+        })}
       </div>
     </article>
   );
