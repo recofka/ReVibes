@@ -1,35 +1,49 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Avatar } from "../Avatar/Avatar";
 import { Comments } from "../Comments/Comments";
 import { format, formatDistanceToNow } from "date-fns";
 import styles from "./Post.module.css";
 
-export function Post({ author, content, publishedAt }) {
-  if (!author) return;
+interface Author {
+  name: string;
+  role: string;
+  avatarUrl: string;
+}
 
-  const [comments, setNewComments] = useState(["Nice!"]);
-  const [newCommentText, setnewCommentText] = useState([""]);
+export interface PostProps {
+  author: Author;
+  publishedAt: Date;
+  contentArr: Content[];
+}
+
+interface Content {
+  type: "paragraph" | "link";
+  content: string;
+}
+
+export function Post({ author, contentArr, publishedAt }: PostProps) {
+  const [comments, setComments] = useState(["Nice!"]);
+  const [newCommentText, setnewCommentText] = useState("");
   const publishedDateFormat = format(publishedAt, "LLLL do 'at' HH:mm");
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
     addSuffix: true,
   });
 
-  function handleNewComment(e) {
-    e.preventDefault();
-    const newComment = e.target.comment.value;
-    setNewComments([...comments, newCommentText]);
+  function handleNewComment(event: FormEvent) {
+    event.preventDefault();
+    setComments([...comments, newCommentText]);
     setnewCommentText("");
   }
 
-  function handleNewCommentChange(e) {
-    setnewCommentText(e.target.value);
+  function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    setnewCommentText(event.target.value);
   }
 
-  function deleteComment(commentToDelete) {
+  function deleteComment(commentToDelete: string) {
     const listCommetsWithoutRemoved = comments.filter((comment) => {
       return comment !== commentToDelete;
     });
-    setNewComments(listCommetsWithoutRemoved);
+    setComments(listCommetsWithoutRemoved);
   }
 
   const isNewCommentEmpty = newCommentText.length === 0;
@@ -51,7 +65,7 @@ export function Post({ author, content, publishedAt }) {
         </time>
       </header>
       <div className={styles.content}>
-        {content.map((line) => {
+        {contentArr.map((line) => {
           if (line.type === "paragraph") {
             return <p key={line.content}>{line.content}</p>;
           } else if (line.type === "link") {
